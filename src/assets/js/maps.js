@@ -3,16 +3,17 @@ var map; //representa el mapa
 var arregloMarkers = []; //almacena los markers de esta practica
 var marker;
 var id = 0; //representa un id autoincrementable para cada marker
-var inputOrigen = document.getElementById('idOrigen');//representa la ruta x
-var inputDestino = document.getElementById('idDestino');//representa la ruta y
 var pos;//representa la posición actual
-var selectTransporte = document.getElementById('mode');
-
 
 //INICIO - FUNCION PARA INICIALIZAR EL MAPA
 function initMap() {
+  /*declaramos varibales globales ya que por el tiempo en que se ejecuta la app en angular si añadimos variables globales,
+  estas pasan indefinidas por tal motivo las pongo en las funciones para asegurarnos de que los elementos ligados a las variables existen*/
   var directionsService = new google.maps.DirectionsService();
   var directionsRenderer = new google.maps.DirectionsRenderer();
+  var inputOrigen = document.getElementById('idOrigen');//representa la ruta x
+  var inputDestino = document.getElementById('idDestino');//representa la ruta y
+  var selectTransporte = document.getElementById('mode'); //representa el medio de transaporte
 
   miUbicacion = {
     lat: 20.6786652,
@@ -68,12 +69,12 @@ function addMarker(location, map) {
 //FUNCION PARA AUTOCOMPLETAR LOS INPUTS
 function autocompletarInputs(){
   //origen
-  var autocompleteOrigen = new google.maps.places.Autocomplete(inputOrigen);
+  var autocompleteOrigen = new google.maps.places.Autocomplete(document.getElementById('idOrigen'));
   autocompleteOrigen.bindTo('bounds', map); //restringe los resultados, los hace mas locales
   autocompleteOrigen.setFields(['address_components', 'geometry', 'icon', 'name']);//establece los campos que se van a ver en los detalles del lugar
 
   //destino
-  var autocompleteDestino = new google.maps.places.Autocomplete(inputDestino);
+  var autocompleteDestino = new google.maps.places.Autocomplete(document.getElementById('idDestino'));
   autocompleteDestino.bindTo('bounds', map);//restringe los resultados, los hace mas locales
   autocompleteDestino.setFields(['address_components', 'geometry', 'icon', 'name']);//establece los campos que se van a ver en los detalles del lugar
 }
@@ -81,6 +82,12 @@ function autocompletarInputs(){
 
 //FUNCION PARA TRAZAR UNA RUTA SEGUN UN PUNTO x Y UN PUNTO y
 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+  /*declaramos varibales globales ya que por el tiempo en que se ejecuta la app en angular si añadimos variables globales,
+  estas pasan indefinidas por tal motivo las pongo en las funciones para asegurarnos de que los elementos ligados a las variables existen*/
+  var inputOrigen = document.getElementById('idOrigen');//representa la ruta x
+  var inputDestino = document.getElementById('idDestino');//representa la ruta y
+  var selectTransporte = document.getElementById('mode'); //representa el medio de transaporte
+
   /*con este condicional evitaremos que cuando se ejecute esta funcion mande
   un input sin valor y mande un error en la consola por localizacion no especificada */
   if (inputOrigen.value == "" || inputDestino.value == "") {
@@ -118,14 +125,14 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
         map.setCenter(pos);//centramos el mapa en la actual posicion
         //limites del area del cuadrado
         var bounds = new google.maps.LatLngBounds(pos); //usamos la clase LatLngBounds y pasamos como parametro en su constructor nuestra posicion para poder ubicar el cuadrado en nuestra posicion
-
+        console.log("contenido de bounds: ",bounds);
         //creamos el cuadrado
         var rectangle = new google.maps.Rectangle({
           bounds: {
-            north: bounds.pa.h,
-            south:bounds.pa.g + .01, //sumamos una centesima al sur para alargar el cuadrado y tenga forma
-            east:bounds.ka.h + .01, //sumamos una centesima al este para alargar el cuadrado y tenga forma
-            west:bounds.ka.g
+            north: bounds.Ya.i, //accedemos a las propiedades que contienen coordenadas
+            south:bounds.Ya.g + .01, //sumamos una centesima al sur para alargar el cuadrado y tenga forma
+            east:bounds.Ta.i + .01, //sumamos una centesima al este para alargar el cuadrado y tenga forma
+            west:bounds.Ta.g
           },
           editable: true,
           draggable: true
