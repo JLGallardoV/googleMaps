@@ -17,7 +17,7 @@ export class MapsComponent implements OnInit {
    const script = document.createElement('script');
    script.innerHTML = ''; //establecemos sintaxis del html
    script.src = url; //direccion donde cargaremos la fuente del script
-   script.async = false; //sin asincronia en la descarga con el html
+   script.async = true; //sin asincronia en la descarga con el html
    script.defer = true; //sin descarga en paralelo con el html
    body.appendChild(script); //añadimos el nodo
  }
