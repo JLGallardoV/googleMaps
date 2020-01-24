@@ -23,7 +23,7 @@ export class MapsComponent implements OnInit {
  }
 
   ngOnInit() {
-    this.loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyB1a8Rh3D5TonkRFxL3JHmwImWnLdtPKzk&libraries=places&callback=initMap&&sensor=true');
+    this.loadScript('https://maps.googleapis.com/maps/api/js?key=TU-API-KEY(https://developers.google.com/maps/documentation/javascript/get-api-key?hl=es)&libraries=places&callback=initMap&&sensor=true');
   }
 
 }
